@@ -195,3 +195,20 @@ resource "null_resource" "cert_manager_servicemonitor" {
     contents = "${sha1(file("${path.module}/resources/cert-manager/servicemonitor.yaml"))}"
   }
 }
+
+resource "null_resource" "cert_manager_networkpolicy" {
+  depends_on = ["helm_release.prometheus_operator", "helm_release.cert-manager"]
+
+  provisioner "local-exec" {
+    command = "kubectl apply -n cert-manager -f ${path.module}/resources/cert-manager/networkpolicy.yaml"
+  }
+
+  provisioner "local-exec" {
+    when    = "destroy"
+    command = "kubectl delete -n cert-manager -f ${path.module}/resources/cert-manager/networkpolicy.yaml"
+  }
+
+  triggers {
+    contents = "${sha1(file("${path.module}/resources/cert-manager/networkpolicy.yaml"))}"
+  }
+}

@@ -1,0 +1,17 @@
+---
+apiVersion: extensions/v1beta1
+kind: NetworkPolicy
+metadata:
+  name: webhook
+  namespace: cert-manager
+spec:
+  policyTypes:
+  - Ingress
+  podSelector:
+    matchLabels:
+      app: webhook
+  ingress:
+  - ports:
+    # this is the Pod's port, not the service (which listens on 443)
+    - port: 6443
+    from: []
