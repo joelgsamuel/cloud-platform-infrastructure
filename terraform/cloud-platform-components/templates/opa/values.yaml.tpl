@@ -4,13 +4,13 @@
 # The 'opa' key embeds an OPA configuration file. See
 # https://www.openpolicyagent.org/docs/configuration.html for more details.
 opa:
-  services:
-    controller:
-      url: "https://www.openpolicyagent.org"
-  bundle:
-    service: controller
-    name: "helm-kubernetes-quickstart"
-  default_decision: "/helm_kubernetes_quickstart/main"
+#   services:
+#     controller:
+#       url: "https://www.openpolicyagent.org"
+#   bundle:
+#     service: controller
+#     name: "helm-kubernetes-quickstart"
+#   default_decision: "/helm_kubernetes_quickstart/main"
 
 # To enforce mutating policies, change to MutatingWebhookConfiguration.
 admissionControllerKind: ValidatingWebhookConfiguration
@@ -24,9 +24,9 @@ admissionControllerFailurePolicy: Ignore
 # operations are subject to OPA policy checks.
 admissionControllerRules:
   - operations: ["*"]
-    apiGroups: ["*"]
+    apiGroups: ["extensions"]
     apiVersions: ["*"]
-    resources: ["*"]
+    resources: ["ingresses"]
 
 # Controls a PodDisruptionBudget for the OPA pod. Suggested use if having opa
 # always running for admission control is important
