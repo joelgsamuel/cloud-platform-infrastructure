@@ -7,7 +7,7 @@ metadata:
     openpolicyagent.org/policy: rego
 data:
   main: |
-    package cloud_platform.ingress_admission
+    package cloud_platform.admission.ingress
 
     import data.kubernetes.ingresses
 
@@ -33,7 +33,7 @@ data:
   main: |
     package system
 
-    import data.cloud_platform.ingress_admission
+    import data.cloud_platform.admission
 
     main = {
       "apiVersion": "admission.k8s.io/v1beta1",
@@ -49,6 +49,6 @@ data:
             "reason": reason,
         },
     } {
-        reason = concat(", ", ingress_admission.deny)
+        reason = concat(", ", admission.ingress.deny)
         reason != ""
     }
