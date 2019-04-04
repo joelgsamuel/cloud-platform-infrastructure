@@ -28,7 +28,7 @@ resource "helm_release" "open-policy-agent" {
   namespace     = "opa"
   repository    = "stable"
   chart         = "opa"
-  version       = "1.3.0"
+  version       = "1.3.2"
   recreate_pods = true
 
   values = [

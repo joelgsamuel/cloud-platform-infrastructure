@@ -1,0 +1,10 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: mypod
+spec:
+  containers:
+  - name: nginx-frontend
+    image: nginx
+  - name: mysql-backend
+    image: mysql

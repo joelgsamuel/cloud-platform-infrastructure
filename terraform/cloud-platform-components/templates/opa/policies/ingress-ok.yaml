@@ -4,7 +4,7 @@ metadata:
   name: ingress-ok
 spec:
   rules:
-  - host: signin.acmecorp.com
+  - host: signin.dev.acmecorp.com
     http:
       paths:
       - backend:

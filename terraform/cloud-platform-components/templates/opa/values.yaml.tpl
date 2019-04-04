@@ -69,16 +69,19 @@ mgmt:
   extraArgs: []
   resources: {}
   configmapPolicies:
-    enabled: true
-    namespaces: [opa, kube-federation-scheduling-policy]
+    enabled: true   
+    namespaces: [opa]
     requireLabel: true
   replicate:
 # NOTE IF you use these, remember to update the RBAC rules above to allow
 #      permissions to replicate these things
-    cluster: []
-#     - [group/]version/resource
-    namespace: []
-#     - [group/]version/resource
+    cluster:
+      - "v1/namespaces"
+      #- "v1/nodes"
+    namespace:
+      - "v1/pods"
+      - "extensions/v1beta1/ingresses"
+     # - "apps/v1/deployments"
     path: kubernetes
 
 # Log level for OPA ('debug', 'info', 'error') (app default=info)
@@ -110,16 +113,90 @@ rbac:
   create: true
   rules:
     cluster: 
+    # - apiGroups:
+    #     - ""
+    #     - extensions
+    #     - v1
+    #     - apps
+    #   resources:
+    #   - namespaces
+    #   - configmaps
+    #   - pods
+    #   - ingresses
+    #   - nodes
+    #   - deployments
+    #   verbs:
+    #   - get
+    #   - list
+    #   - watch
+    #   - patch
+    #   - describe
     - apiGroups:
         - ""
       resources:
-      - namespaces
-      - configmaps
+      - pods
       verbs:
       - get
       - list
       - watch
-
+      - patch
+      - describe
+    - apiGroups:
+        - ""
+      resources:
+      - configmaps
+      verbs:
+      - update
+      - patch
+      - get
+      - list
+      - watch
+    - apiGroups:
+        - ""
+      resources:
+      - namespaces
+      verbs:
+      - get
+      - list
+      - watch
+    - apiGroups:
+        - extensions
+      resources:
+      - ingresses
+      verbs:
+      - get
+      - list
+      - watch
+    # - apiGroups:
+    #     - apps
+    #   resources:
+    #   - deployments
+    #   verbs:
+    #   - get
+    #   - list
+    #   - watch
+    namespace:
+    - apiGroups:
+        - ""
+      resources:
+      - configmaps
+      verbs:
+      - update
+      - patch
+      - get
+      - list
+      - watch
+    - apiGroups:
+        - ""
+      resources:
+      - pods
+      verbs:
+      - get
+      - list
+      - watch
+      - patch
+      - describe
+    
 serviceAccount:
   # Specifies whether a ServiceAccount should be created
   create: true

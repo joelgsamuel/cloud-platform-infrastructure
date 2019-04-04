@@ -1,10 +1,10 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: ingress-ok
+  name: ingress-bad
 spec:
   rules:
-  - host: signin.acmecorp.com
+  - host: acmecorp.com
     http:
       paths:
       - backend:
